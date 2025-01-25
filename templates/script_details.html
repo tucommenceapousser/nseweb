@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section>
-    <h2>{{ script_name }}</h2>
-    <pre>{{ content }}</pre>
-    <a href="/">Retour à la liste</a>
+<section class="script-detail">
+    <h2 class="script-title highlight">{{ script_name }}</h2>
+    <pre class="script-content highlight-text">{{ content }}</pre>
+    <a href="/" class="back-link">Retour à la liste</a>
 </section>
 {% endblock %}
