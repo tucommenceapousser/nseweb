@@ -138,3 +138,72 @@ section h2 {
     margin-bottom: 20px;
     text-shadow: 0 0 5px #58a6ff;
 }
+
+/* Enhanced detail section for scripts */
+.script-detail {
+    margin: 40px auto;
+    max-width: 80%;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.7);
+    text-align: center;
+}
+
+.script-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #58a6ff;
+    text-shadow: 0 0 10px #58a6ff, 0 0 20px #39d353;
+}
+
+.script-content {
+    background-color: #2d2d2d;
+    padding: 20px;
+    border-radius: 5px;
+    color: #b3b3b3;
+    overflow-x: auto;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.7);
+    border: 2px solid #58a6ff;
+}
+
+.back-link {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #333333;
+    border: 2px solid #58a6ff;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: #58a6ff;
+    color: #0f0f0f;
+    border-color: #0f0f0f;
+}
+
+/* Animated glow effect for titles */
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 10px #58a6ff, 0 0 20px #58a6ff, 0 0 30px #39d353;
+    }
+    50% {
+        text-shadow: 0 0 15px #ff00ff, 0 0 25px #ff00ff, 0 0 35px #ff00ff;
+    }
+    100% {
+        text-shadow: 0 0 10px #58a6ff, 0 0 20px #58a6ff, 0 0 30px #39d353;
+    }
+}
+
+.script-title {
+    animation: glow 1.5s infinite alternate;
+}
