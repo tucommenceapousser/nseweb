@@ -156,6 +156,7 @@ section h2 {
     margin-bottom: 20px;
     color: #58a6ff;
     text-shadow: 0 0 10px #58a6ff, 0 0 20px #39d353;
+    animation: glow 1.5s infinite alternate;
 }
 
 .script-content {
@@ -202,8 +203,4 @@ section h2 {
     100% {
         text-shadow: 0 0 10px #58a6ff, 0 0 20px #58a6ff, 0 0 30px #39d353;
     }
-}
-
-.script-title {
-    animation: glow 1.5s infinite alternate;
 }
