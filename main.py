@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for
 import os
 import requests
+import shutil  # Pour supprimer le répertoire et forcer un nouveau téléchargement
 
 app = Flask(__name__)
 
@@ -13,6 +14,10 @@ SCRIPTS_DIR = "downloaded_scripts"
 
 def download_scripts():
     """Télécharge les scripts NSE depuis les deux dossiers définis."""
+    # Supprimer le répertoire existant et tout son contenu pour forcer un téléchargement complet
+    if os.path.exists(SCRIPTS_DIR):
+        shutil.rmtree(SCRIPTS_DIR)
+    
     os.makedirs(SCRIPTS_DIR, exist_ok=True)
     for folder in SCRIPT_FOLDERS:
         folder_url = f"{BASE_URL}/{folder}"
@@ -64,7 +69,8 @@ def script_details(folder, script_name):
 
 @app.route("/refresh")
 def refresh_scripts():
-    download_scripts()
+    """Actualise les scripts en les téléchargeant à nouveau."""
+    download_scripts()  # Force le téléchargement des scripts
     return redirect(url_for("home"))
 
 if __name__ == "__main__":
