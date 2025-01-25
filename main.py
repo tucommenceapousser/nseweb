@@ -24,10 +24,13 @@ def download_scripts():
             for file in files:
                 if file.get("name", "").endswith(".nse"):
                     script_path = os.path.join(folder_path, file["name"])
-                    if not os.path.exists(script_path):
+                    if not os.path.exists(script_path):  # Vérifier si le fichier existe déjà
+                        print(f"Téléchargement de {file['name']} dans {folder}")
                         content = requests.get(file["download_url"]).text
                         with open(script_path, "w") as f:
                             f.write(content)
+                    else:
+                        print(f"Le script {file['name']} existe déjà dans {folder}")
         else:
             print(f"Impossible d'accéder au dossier : {folder}")
 
@@ -35,12 +38,12 @@ def get_scripts():
     """Récupère les scripts NSE organisés par dossier."""
     scripts = {}
     if not os.path.exists(SCRIPTS_DIR):
-        download_scripts()
+        download_scripts()  # Télécharger les scripts si le répertoire est vide
     for folder in SCRIPT_FOLDERS:
         folder_path = os.path.join(SCRIPTS_DIR, folder)
         if os.path.exists(folder_path):
             scripts[folder] = [
-                {"name": script, "path": f"{folder}/{script}"}
+                {"name": script, "path": os.path.join(folder, script)}  # Utiliser le chemin absolu
                 for script in os.listdir(folder_path) if script.endswith(".nse")
             ]
     return scripts
