@@ -3,18 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NSE, Nuclei & Nmap Explorer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>NSE Scripts</title>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            color: #e7e7de;
+            font-family: "Courier New", Courier, monospace;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            padding: 20px;
+            background: linear-gradient(90deg, #6a0572, #a6125a);
+            color: #fff;
+            text-transform: uppercase;
+        }
+        h1 {
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+        a {
+            color: #22d1ee;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        section {
+            padding: 20px;
+        }
+        button {
+            background-color: #22d1ee;
+            border: none;
+            border-radius: 5px;
+            color: #1a1a2e;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #0b8aa3;
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 0.8em;
+            color: #999;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>NSE, Nuclei & Nmap Explorer</h1>
+        <h1>Scripts NSE Explorer</h1>
     </header>
     <main>
         {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>Powered by <span>trhacknon</span></p>
+        <p>Créé par <strong>trhacknon</strong></p>
     </footer>
 </body>
 </html>
