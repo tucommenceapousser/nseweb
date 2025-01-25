@@ -1,28 +1,13 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Scripts NSE</title>
-</head>
-<body>
-    <h1>Liste des scripts NSE</h1>
-    {% if scripts %}
-        <ul>
-            {% for folder, script_list in scripts.items() %}
-                <li><strong>{{ folder }}</strong>
-                    <ul>
-                        {% for script in script_list %}
-                            <li><a href="{{ url_for('script_details', folder=folder, script_name=script.name) }}">{{ script.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun script trouvé.</p>
-    {% endif %}
-    <br>
-    <a href="{{ url_for('refresh_scripts') }}">Actualiser les scripts</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <h2>Scripts NSE Disponibles</h2>
+    <button onclick="location.href='{{ url_for('refresh_scripts') }}'">Actualiser les Scripts</button>
+    <ul>
+        {% for script in scripts %}
+            <li><a href="{{ url_for('script_details', script_name=script.name) }}">{{ script.name }}</a></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
