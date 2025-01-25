@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <h2>Scripts NSE Disponibles</h2>
+    <button onclick="location.href='{{ url_for('refresh_scripts') }}'">Actualiser les Scripts</button>
+    <ul>
+        {% for script in scripts %}
+            <li><a href="{{ url_for('script_details', script_name=script.name) }}">{{ script.name }}</a></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
