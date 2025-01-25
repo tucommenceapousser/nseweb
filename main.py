@@ -6,12 +6,12 @@ app = Flask(__name__)
 
 # Chemin pour stocker les scripts téléchargés
 SCRIPTS_DIR = "scripts/nse"
-GITHUB_URL = "https://raw.githubusercontent.com/tucommenceapousser/nmap-nse-scripts/master/scripts/"
+GITHUB_URL = "https://raw.githubusercontent.com/cldrn/nmap-nse-scripts/master/scripts/"
 
 def download_scripts():
     """Télécharge les scripts NSE depuis GitHub."""
     os.makedirs(SCRIPTS_DIR, exist_ok=True)
-    scripts_url = "https://api.github.com/repos/tucommenceapousser/nmap-nse-scripts/contents/scripts"
+    scripts_url = "https://api.github.com/repos/cldrn/nmap-nse-scripts/contents/scripts"
     response = requests.get(scripts_url)
     if response.status_code == 200:
         scripts = response.json()
