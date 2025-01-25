@@ -2,15 +2,15 @@
 
 {% block content %}
 <section>
-    <h2>Scripts NSE Disponibles</h2>
+    <h2>Explorez les scripts NSE</h2>
     <button onclick="location.href='{{ url_for('refresh_scripts') }}'">Actualiser les Scripts</button>
     <br><br>
-    {% for repo_name, repo_scripts in scripts.items() %}
-        <h3>{{ repo_name }}</h3>
-        <ul>
-            {% for script in repo_scripts %}
+    {% for folder, folder_scripts in scripts.items() %}
+        <h3 style="color: #f7a400;">{{ folder }}</h3>
+        <ul style="list-style: none; padding: 0;">
+            {% for script in folder_scripts %}
                 <li>
-                    <a href="{{ url_for('script_details', repo_name=repo_name, script_name=script.name) }}">{{ script.name }}</a>
+                    <a href="{{ url_for('script_details', folder=folder, script_name=script.name) }}">{{ script.name }}</a>
                 </li>
             {% endfor %}
         </ul>
