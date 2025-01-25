@@ -56,8 +56,8 @@ def get_scripts():
 @app.route("/")
 def home():
     scripts = get_scripts()
+    print("Scripts récupérés :", scripts)  # Afficher les scripts récupérés dans la console
     return render_template("home.html", scripts=scripts)
-
 @app.route("/script/<folder>/<script_name>")
 def script_details(folder, script_name):
     script_path = os.path.join(SCRIPTS_DIR, folder, script_name)
