@@ -4,10 +4,16 @@
 <section>
     <h2>Scripts NSE Disponibles</h2>
     <button onclick="location.href='{{ url_for('refresh_scripts') }}'">Actualiser les Scripts</button>
-    <ul>
-        {% for script in scripts %}
-            <li><a href="{{ url_for('script_details', script_name=script.name) }}">{{ script.name }}</a></li>
-        {% endfor %}
-    </ul>
+    <br><br>
+    {% for repo_name, repo_scripts in scripts.items() %}
+        <h3>{{ repo_name }}</h3>
+        <ul>
+            {% for script in repo_scripts %}
+                <li>
+                    <a href="{{ url_for('script_details', repo_name=repo_name, script_name=script.name) }}">{{ script.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
 </section>
 {% endblock %}
