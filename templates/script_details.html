@@ -2,9 +2,11 @@
 
 {% block content %}
 <section>
-    <h2>{{ script_name }}</h2>
-    <h4>Dépôt : {{ repo_name }}</h4>
-    <pre>{{ content }}</pre>
+    <h2 style="color: #f7a400;">{{ script_name }}</h2>
+    <h4>Dossier : {{ folder }}</h4>
+    <pre style="background: #222; color: #fff; padding: 15px; border-radius: 5px; overflow-x: auto;">
+{{ content }}
+    </pre>
     <a href="/">Retour à la liste</a>
 </section>
 {% endblock %}
