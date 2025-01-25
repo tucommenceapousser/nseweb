@@ -1,50 +1,47 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, redirect, url_for
 import os
 import requests
 
 app = Flask(__name__)
 
-# Chemin pour stocker les scripts téléchargés
-SCRIPTS_DIR = "scripts"
-GITHUB_REPOS = {
-    "cldrn": "https://api.github.com/repos/cldrn/nmap-nse-scripts/contents/scripts",
-    "httprecon": "https://api.github.com/repos/scipag/httprecon-nse/contents",
-    "psc4re": "https://api.github.com/repos/psc4re/NSE-scripts/contents",
-    "r00t-3xp10it": "https://api.github.com/repos/r00t-3xp10it/nmap-nse-modules/contents",
-    "Z-0ne": "https://api.github.com/repos/Z-0ne/ScanS2-045-Nmap/contents",
-    "aerissecure": "https://api.github.com/repos/aerissecure/nse/contents",
-    "dorkerdevil": "https://api.github.com/repos/dorkerdevil/NMAP-BRUTEFORCER-private-script-/contents",
-    "mmpx12": "https://api.github.com/repos/mmpx12/nse-country-scan/contents",
-}
+# Dossiers GitHub à explorer
+BASE_URL = "https://api.github.com/repos/tucommenceapousser/nmap-nse-scripts/contents"
+SCRIPT_FOLDERS = ["scripts", "old-scripts"]
+
+# Chemin de stockage local pour les scripts
+SCRIPTS_DIR = "downloaded_scripts"
 
 def download_scripts():
-    """Télécharge les scripts NSE depuis chaque dépôt GitHub configuré."""
+    """Télécharge les scripts NSE depuis les deux dossiers définis."""
     os.makedirs(SCRIPTS_DIR, exist_ok=True)
-    for repo_name, repo_url in GITHUB_REPOS.items():
-        repo_dir = os.path.join(SCRIPTS_DIR, repo_name)
-        os.makedirs(repo_dir, exist_ok=True)
-        response = requests.get(repo_url)
+    for folder in SCRIPT_FOLDERS:
+        folder_url = f"{BASE_URL}/{folder}"
+        response = requests.get(folder_url)
         if response.status_code == 200:
-            scripts = response.json()
-            for script in scripts:
-                if script.get("name", "").endswith(".nse"):
-                    script_path = os.path.join(repo_dir, script["name"])
+            files = response.json()
+            folder_path = os.path.join(SCRIPTS_DIR, folder)
+            os.makedirs(folder_path, exist_ok=True)
+            for file in files:
+                if file.get("name", "").endswith(".nse"):
+                    script_path = os.path.join(folder_path, file["name"])
                     if not os.path.exists(script_path):
-                        content = requests.get(script["download_url"]).text
-                        with open(script_path, "w") as file:
-                            file.write(content)
+                        content = requests.get(file["download_url"]).text
+                        with open(script_path, "w") as f:
+                            f.write(content)
+        else:
+            print(f"Impossible d'accéder au dossier : {folder}")
 
 def get_scripts():
-    """Récupère les scripts NSE téléchargés par dépôt."""
+    """Récupère les scripts NSE organisés par dossier."""
     scripts = {}
     if not os.path.exists(SCRIPTS_DIR):
         download_scripts()
-    for repo_name in os.listdir(SCRIPTS_DIR):
-        repo_path = os.path.join(SCRIPTS_DIR, repo_name)
-        if os.path.isdir(repo_path):
-            scripts[repo_name] = [
-                {"name": script, "path": f"{repo_path}/{script}"}
-                for script in os.listdir(repo_path) if script.endswith(".nse")
+    for folder in SCRIPT_FOLDERS:
+        folder_path = os.path.join(SCRIPTS_DIR, folder)
+        if os.path.exists(folder_path):
+            scripts[folder] = [
+                {"name": script, "path": f"{folder}/{script}"}
+                for script in os.listdir(folder_path) if script.endswith(".nse")
             ]
     return scripts
 
@@ -53,18 +50,17 @@ def home():
     scripts = get_scripts()
     return render_template("home.html", scripts=scripts)
 
-@app.route("/script/<repo_name>/<script_name>")
-def script_details(repo_name, script_name):
-    script_path = os.path.join(SCRIPTS_DIR, repo_name, script_name)
+@app.route("/script/<folder>/<script_name>")
+def script_details(folder, script_name):
+    script_path = os.path.join(SCRIPTS_DIR, folder, script_name)
     if not os.path.exists(script_path):
         return "Script introuvable", 404
     with open(script_path, "r") as file:
         content = file.read()
-    return render_template("script_details.html", repo_name=repo_name, script_name=script_name, content=content)
+    return render_template("script_details.html", folder=folder, script_name=script_name, content=content)
 
 @app.route("/refresh")
 def refresh_scripts():
-    """Met à jour tous les scripts des dépôts."""
     download_scripts()
     return redirect(url_for("home"))
 
