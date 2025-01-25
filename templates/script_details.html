@@ -1,14 +1,9 @@
-<!-- script_details.html -->
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ script_name }}</title>
-</head>
-<body>
-    <h1>{{ script_name }}</h1>
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <h2>{{ script_name }}</h2>
     <pre>{{ content }}</pre>
-    <a href="{{ url_for('home') }}">Retour à la liste</a>
-</body>
-</html>
+    <a href="/">Retour à la liste</a>
+</section>
+{% endblock %}
